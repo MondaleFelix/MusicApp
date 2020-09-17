@@ -19,12 +19,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginVC()
+        window?.rootViewController = createTabbar()
         window?.makeKeyAndVisible()
-        
-        
     }
 
+//    Favorites and home
+    
+    func createHomeNC() -> UINavigationController {
+        let homeNC = HomeVC()
+        homeNC.title = "Top 50"
+        homeNC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
+        return UINavigationController(rootViewController: homeNC)
+    }
+    
+    func createFavoritesNC() -> UINavigationController {
+        let favoritesNC = FavoritesListVC()
+        favoritesNC.title = "Favorites"
+        favoritesNC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+        return UINavigationController(rootViewController: favoritesNC)
+    }
+    
+    
+    func createTabbar() -> UITabBarController {
+        let tabbar = UITabBarController()
+        tabbar.viewControllers = [createHomeNC(), createFavoritesNC()]
+        return tabbar
+    }
+    
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

@@ -25,6 +25,7 @@ class LoginVC: UIViewController {
         view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.image = UIImage(named: "logo")
+        
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
             logoImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -40,18 +41,21 @@ class LoginVC: UIViewController {
         view.addSubview(loginButton)
         loginButton.translatesAutoresizingMaskIntoConstraints = false
         loginButton.layer.cornerRadius = 10
-        
         loginButton.setTitle("Log In", for: .normal)
         loginButton.backgroundColor = .systemGreen
         
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        
         NSLayoutConstraint.activate([
-            
             loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             loginButton.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 50),
             loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -80),
             loginButton.heightAnchor.constraint(equalToConstant: 44)
-            
         ])
+    }
+    
+    @objc func loginButtonPressed(){
+        print("Pressed")
     }
 }

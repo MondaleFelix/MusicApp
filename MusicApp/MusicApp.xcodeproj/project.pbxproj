@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F9844A72512DE7500417F5A /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9844A62512DE7500417F5A /* HomeVC.swift */; };
+		6F9844A92512DEBD00417F5A /* FavoritesListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9844A82512DEBD00417F5A /* FavoritesListVC.swift */; };
+		6FCACD60250FF78A00158EDB /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCACD5F250FF78A00158EDB /* NetworkManager.swift */; };
 		6FF3F3AE250B714900CFDFE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF3F3AD250B714900CFDFE8 /* AppDelegate.swift */; };
 		6FF3F3B0250B714900CFDFE8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF3F3AF250B714900CFDFE8 /* SceneDelegate.swift */; };
 		6FF3F3B7250B714E00CFDFE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6FF3F3B6250B714E00CFDFE8 /* Assets.xcassets */; };
@@ -15,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F9844A62512DE7500417F5A /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		6F9844A82512DEBD00417F5A /* FavoritesListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListVC.swift; sourceTree = "<group>"; };
+		6FCACD5F250FF78A00158EDB /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6FF3F3AA250B714900CFDFE8 /* MusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6FF3F3AD250B714900CFDFE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6FF3F3AF250B714900CFDFE8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +41,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6FCACD5B250FF73E00158EDB /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6FCACD5F250FF78A00158EDB /* NetworkManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		6FCACD5E250FF76B00158EDB /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				6FF3F3AD250B714900CFDFE8 /* AppDelegate.swift */,
+				6FF3F3AF250B714900CFDFE8 /* SceneDelegate.swift */,
+				6FF3F3B8250B714E00CFDFE8 /* LaunchScreen.storyboard */,
+				6FF3F3B6250B714E00CFDFE8 /* Assets.xcassets */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		6FF3F3A1250B714900CFDFE8 = {
 			isa = PBXGroup;
 			children = (
@@ -54,13 +79,11 @@
 		6FF3F3AC250B714900CFDFE8 /* MusicApp */ = {
 			isa = PBXGroup;
 			children = (
+				6FCACD5B250FF73E00158EDB /* Manager */,
 				6FF3F3C1250B74F800CFDFE8 /* Model */,
 				6FF3F3C2250B750000CFDFE8 /* View */,
 				6FF3F3C3250B750400CFDFE8 /* Controller */,
-				6FF3F3AD250B714900CFDFE8 /* AppDelegate.swift */,
-				6FF3F3AF250B714900CFDFE8 /* SceneDelegate.swift */,
-				6FF3F3B6250B714E00CFDFE8 /* Assets.xcassets */,
-				6FF3F3B8250B714E00CFDFE8 /* LaunchScreen.storyboard */,
+				6FCACD5E250FF76B00158EDB /* Support */,
 				6FF3F3BB250B714E00CFDFE8 /* Info.plist */,
 			);
 			path = MusicApp;
@@ -76,7 +99,6 @@
 		6FF3F3C2250B750000CFDFE8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				6FF3F3C4250B753700CFDFE8 /* LoginVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -84,6 +106,9 @@
 		6FF3F3C3250B750400CFDFE8 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6FF3F3C4250B753700CFDFE8 /* LoginVC.swift */,
+				6F9844A62512DE7500417F5A /* HomeVC.swift */,
+				6F9844A82512DEBD00417F5A /* FavoritesListVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -158,6 +183,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F9844A92512DEBD00417F5A /* FavoritesListVC.swift in Sources */,
+				6FCACD60250FF78A00158EDB /* NetworkManager.swift in Sources */,
+				6F9844A72512DE7500417F5A /* HomeVC.swift in Sources */,
 				6FF3F3AE250B714900CFDFE8 /* AppDelegate.swift in Sources */,
 				6FF3F3C5250B753700CFDFE8 /* LoginVC.swift in Sources */,
 				6FF3F3B0250B714900CFDFE8 /* SceneDelegate.swift in Sources */,
