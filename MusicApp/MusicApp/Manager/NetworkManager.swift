@@ -8,12 +8,14 @@
 
 
 import Foundation
-//import Spartan
+import Spartan
 
 class NetworkManager {
+    
     //make it singleton
     public static let shared = NetworkManager()
     private init() {}
+    
     //properties
     static let urlSession = URLSession.shared // shared singleton session object used to run tasks. Will be useful later
     static private let baseURL = "https://accounts.spotify.com/"
@@ -52,16 +54,9 @@ class NetworkManager {
         didSet { defaults.set(refreshToken, forKey: refreshTokenKey) }
     }
 
-//    static let configuration: SPTConfiguration = {
-//        let configuration = SPTConfiguration(clientID: NetworkManager.clientId, redirectURL: NetworkManager.redirectUri)
-//        configuration.playURI = ""
-//        configuration.tokenSwapURL = URL(string: "http://localhost:1234/swap")
-//        configuration.tokenRefreshURL = URL(string: "http://localhost:1234/refresh")
-//        return configuration
-//    }()
-    
     //MARK: Static Methods
     ///fetch accessToken from Spotify
+    
     static func fetchAccessToken(completion: @escaping (Result<SpotifyAuth, Error>) -> Void) {
         guard let code = authorizationCode else { return completion(.failure(ErrorMessage.missing(message: "No authorization code found."))) }
         let url = URL(string: "\(baseURL)api/token")!
@@ -143,22 +138,30 @@ class NetworkManager {
     }
     
     ///fetch user with an unexpired access token
-//    static func fetchUser(accessToken: String, completion: @escaping (Result<User, Error>) -> Void) {
-//        Spartan.authorizationToken = accessToken
-//        _ = Spartan.getMe(success: { (user) in
-//            // Do something with the user object
-//            let user = User(user: user)
+    static func fetchUser(accessToken: String, completion: @escaping (Result<User, Error>) -> Void) {
+        Spartan.authorizationToken = accessToken
+        _ = Spartan.getMe(success: { (spartanUser) in
+            // Do something with the user object
+            print(spartanUser)
+            let user = User(user: spartanUser)
 //            User.setCurrent(user, writeToUserDefaults: true)
-//            completion(.success(user))
-//        }, failure: { (error) in
-//            if error.errorType == .unauthorized {
-//                print("Refresh token!")
-//                return
-//            }
-//            completion(.failure(error))
-//        })
-//    }
+            completion(.success(user))
+        }, failure: { (error) in
+            if error.errorType == .unauthorized {
+                print("Refresh token!")
+                return
+            }
+            completion(.failure(error))
+        })
+    }
     
-    
-    //MARK: Helpers
+    static func fetchTopArtists(completion: @escaping (Result<[Artist], Error>) -> Void) {
+        
+        _ = Spartan.getMyTopArtists(limit: 50, offset: 0, timeRange: .mediumTerm, success: { (pagingObject) in
+            completion(.success(pagingObject.items))
+
+        }, failure: { (error) in
+            completion(.failure(error))
+        })
+    }
 }

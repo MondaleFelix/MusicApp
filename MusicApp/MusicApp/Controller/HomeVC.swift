@@ -7,22 +7,30 @@
 //
 
 import UIKit
+import Spartan
 
 class HomeVC: UIViewController {
 
     let tableView = UITableView()
+    var artistList: [Artist] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
         configureTableView()
+        title = "Top 50"
+        getUsersTopArtists()
         
     }
     
     
+    
     private func configureViewController(){
         navigationController?.navigationBar.prefersLargeTitles = true
-        view.backgroundColor = .systemBackground    }
+        view.backgroundColor = .systemBackground
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
     private func configureTableView(){
         view.addSubview(tableView)
@@ -38,5 +46,18 @@ class HomeVC: UIViewController {
         
         ])
         
+    }
+    
+    func getUsersTopArtists(){
+        NetworkManager.fetchTopArtists() { (result) in
+            
+                switch result{
+                case .failure(let error):
+                    print(error)
+                case .success(let artists):
+                    self.artistList = artists
+                }
+            }
+
     }
 }

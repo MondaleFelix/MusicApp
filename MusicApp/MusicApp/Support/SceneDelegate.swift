@@ -19,17 +19,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginVC()
+        window?.rootViewController = createTabbar()
         window?.makeKeyAndVisible()
     }
 
 //    Favorites and home
     
-    func createHomeNC() -> UINavigationController {
-        let homeNC = HomeVC()
-        homeNC.title = "Top 50"
-        homeNC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
-        return UINavigationController(rootViewController: homeNC)
+    func createLoginNC() -> UINavigationController {
+        let loginVC = LoginVC()
+        loginVC.title = "Log in"
+        loginVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
+        return UINavigationController(rootViewController: loginVC)
     }
     
     func createFavoritesNC() -> UINavigationController {
@@ -42,7 +42,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func createTabbar() -> UITabBarController {
         let tabbar = UITabBarController()
-        tabbar.viewControllers = [createHomeNC(), createFavoritesNC()]
+        tabbar.viewControllers = [createLoginNC(), createFavoritesNC()]
         return tabbar
     }
     
