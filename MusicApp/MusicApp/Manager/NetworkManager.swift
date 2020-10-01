@@ -155,11 +155,20 @@ class NetworkManager {
         })
     }
     
+    
     static func fetchTopArtists(completion: @escaping (Result<[Artist], Error>) -> Void) {
         
         _ = Spartan.getMyTopArtists(limit: 50, offset: 0, timeRange: .mediumTerm, success: { (pagingObject) in
             completion(.success(pagingObject.items))
 
+        }, failure: { (error) in
+            completion(.failure(error))
+        })
+    }
+    
+    static func fetchArtistTopTracks(artistId : String, completion: @escaping (Result<[Track], Error>) -> Void ){
+         _ = Spartan.getArtistsTopTracks(artistId: artistId, country: .us, success: { (tracks) in
+            completion(.success(tracks))
         }, failure: { (error) in
             completion(.failure(error))
         })

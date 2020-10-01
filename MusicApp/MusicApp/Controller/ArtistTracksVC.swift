@@ -1,22 +1,24 @@
 //
-//  HomeVC.swift
+//  ArtistTracksVC.swift
 //  MusicApp
 //
-//  Created by Mondale on 9/16/20.
+//  Created by Mondale on 10/1/20.
 //  Copyright © 2020 Mondale. All rights reserved.
 //
 
 import UIKit
 import Spartan
 
-class HomeVC: UIViewController {
+class ArtistTracksVC: UIViewController {
 
     let tableView = UITableView()
-    var artistList: [Artist] = []
+    var artistTracksList: [Track] = []
+    var artist: Artist! = nil
+    lazy var artistID = self.artist.id as! String
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getUsersTopArtists()
+        getArtistTopTracks()
         configureViewController()
         configureTableView()
     
@@ -29,7 +31,7 @@ class HomeVC: UIViewController {
         view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.tabBarController?.tabBar.isHidden = false
-        title = "Top 50"
+        title = artist.name
 
     }
     
@@ -37,7 +39,7 @@ class HomeVC: UIViewController {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = 100
-        tableView.register(ArtistCell.self, forCellReuseIdentifier: "ArtistCell")
+        tableView.register(ArtistCell.self, forCellReuseIdentifier: "TrackCell")
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -52,48 +54,47 @@ class HomeVC: UIViewController {
         ])
         
     }
-    
-    func getUsersTopArtists(){
-        NetworkManager.fetchTopArtists() { (result) in
+
+    func getArtistTopTracks(){
+        NetworkManager.fetchArtistTopTracks(artistId: artistID) { (result) in
             
-                switch result{
-                case .failure(let error):
-                    print(error)
-                case .success(let artists):
-                    self.artistList = artists
-                    self.tableView.reloadData()
-                }
+            switch result{
+            case .failure(let error):
+                print(error)
+                
+            case .success(let tracks):
+                print(tracks)
+                self.artistTracksList = tracks
+                self.tableView.reloadData()
             }
+            
+        }
+        
+        
 
     }
 }
 
-extension HomeVC: UITableViewDelegate {
+extension ArtistTracksVC: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let artist = artistList[indexPath.row]
-        let artistTracksVC = ArtistTracksVC()
-        artistTracksVC.artist = artist
-        self.navigationController?.pushViewController(artistTracksVC, animated: true)
-    }
+    
 }
 
 
-extension HomeVC: UITableViewDataSource {
+extension ArtistTracksVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return artistList.count
+        return artistTracksList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell", for: indexPath) as! ArtistCell
-        let artist = artistList[indexPath.row]
-        let artistImageUrL = artist.images.first?.url
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell") as! ArtistCell
+        let track = artistTracksList[indexPath.row]
+        cell.artistNameLabel.text = track.name
         
-        cell.artistNameLabel.text = artist.name
-        cell.downloadImage(from: artistImageUrL)
-        
-            
+        let imageUrl = track.album.images.first?.url
+        cell.downloadImage(from: imageUrl)
         return cell
+        
     }
     
     
