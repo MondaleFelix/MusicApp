@@ -77,6 +77,19 @@ class ArtistTracksVC: UIViewController {
 
 extension ArtistTracksVC: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let track = artistTracksList[indexPath.row]
+        let trackPlayerVC = TrackPlayerVC()
+        trackPlayerVC.track = track
+        
+        // Passes image from selected cell to track player view controller
+        
+        let selectedCell = tableView.cellForRow(at: indexPath) as! ArtistCell
+        trackPlayerVC.trackImage = selectedCell.artistImage.image
+        
+        
+        navigationController?.pushViewController(trackPlayerVC, animated: true)
+    }
     
 }
 
