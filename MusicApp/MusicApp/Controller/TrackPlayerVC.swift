@@ -8,6 +8,7 @@
 
 import UIKit
 import Spartan
+import Foundation
 import AVFoundation
 
 class TrackPlayerVC: UIViewController {
@@ -15,6 +16,7 @@ class TrackPlayerVC: UIViewController {
     let trackImageView = UIImageView()
     var track: Track!
     var player: AVPlayer?
+    let userDefaults = UserDefaults.standard
     
     var trackImage: UIImage!
     let songNameLabel = UILabel()
@@ -22,6 +24,7 @@ class TrackPlayerVC: UIViewController {
     let playbackSlider = UISlider()
     
     let playButton = UIButton()
+    let favoriteButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +32,9 @@ class TrackPlayerVC: UIViewController {
         configureNameLabels()
         configurePlaybackSlider()
         configurePlayButton()
-        view.backgroundColor = .systemGray
+        configureFavoriteButton()
+        retrieveAudioPreview()
+        view.backgroundColor = .black
     }
     
 
@@ -55,6 +60,10 @@ class TrackPlayerVC: UIViewController {
         
         songNameLabel.text = track.name
         albumNameLabel.text = track.album.name
+        
+        songNameLabel.textColor = .white
+    
+        albumNameLabel.textColor = .white
         
         songNameLabel.translatesAutoresizingMaskIntoConstraints = false
         albumNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -107,18 +116,44 @@ class TrackPlayerVC: UIViewController {
     
     
     @objc func playButtonPressed(){
-        
-        let urlString = track.previewUrl
-        guard let url = URL.init(string: urlString!)
-            else {
-               
-                return
-        }
-        let playerItem = AVPlayerItem.init(url: url)
-        player = AVPlayer.init(playerItem: playerItem)
         player?.play()
-        
-        
     }
     
+    
+    private func configureFavoriteButton(){
+        view.addSubview(favoriteButton)
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        favoriteButton.backgroundColor = .blue
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
+        
+        NSLayoutConstraint.activate([
+            favoriteButton.topAnchor.constraint(equalTo: playbackSlider.bottomAnchor, constant: 20),
+            favoriteButton.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 10),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 50),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 50),
+        
+        ])
+    }
+    
+    
+    @objc func favoriteButtonPressed(){
+        guard var favoritesList = userDefaults.stringArray(forKey: "favTracks") else {
+            return
+        }
+        favoritesList.append(track.id as! String)
+        userDefaults.set(favoritesList, forKey: "favTracks")
+        print(favoritesList)
+        print("set track id")
+    }
+    
+    
+    private func retrieveAudioPreview(){
+        let urlString = track.previewUrl
+        guard let url = URL.init(string: urlString!) else { return }
+        
+        let playerItem = AVPlayerItem.init(url: url)
+        player = AVPlayer.init(playerItem: playerItem)
+        
+    }
 }

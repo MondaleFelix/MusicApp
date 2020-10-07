@@ -8,17 +8,28 @@
 
 import UIKit
 import Spartan
+import Foundation
+
 
 class FavoritesListVC: UIViewController {
 
     let tableView = UITableView()
-    var artistTopTracks: [Track] = []
+    var favoritesList: [String] = UserDefaults.standard.stringArray(forKey: "favTracks") ?? [String]()
+    
+    
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTableView()
+        configureViewController()
+
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print(favoritesList)
     }
     
     private func configureTableView(){
@@ -33,6 +44,13 @@ class FavoritesListVC: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         
         ])
+    }
+    
+    private func configureViewController(){
+        navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = .systemBackground
+        title = "Favorites"
+
     }
     
 

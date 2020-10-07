@@ -53,6 +53,11 @@ class HomeVC: UIViewController {
         
     }
     
+    
+//    private func addBarItem(){
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .bordered, target: self, action: #selector(UIViewController.dismiss(animated:completion:)))
+//    }
+    
     func getUsersTopArtists(){
         NetworkManager.fetchTopArtists() { (result) in
             
@@ -61,7 +66,11 @@ class HomeVC: UIViewController {
                     print(error)
                 case .success(let artists):
                     self.artistList = artists
-                    self.tableView.reloadData()
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+
                 }
             }
 

@@ -65,7 +65,10 @@ class ArtistTracksVC: UIViewController {
             case .success(let tracks):
                 print(tracks)
                 self.artistTracksList = tracks
-                self.tableView.reloadData()
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
             }
             
         }
