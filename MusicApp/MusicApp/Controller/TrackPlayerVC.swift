@@ -8,26 +8,27 @@
 
 import UIKit
 import Spartan
+import AVFoundation
 
 class TrackPlayerVC: UIViewController {
 
     let trackImageView = UIImageView()
     var track: Track!
+    var player: AVPlayer?
     
     var trackImage: UIImage!
     let songNameLabel = UILabel()
     let albumNameLabel = UILabel()
     let playbackSlider = UISlider()
     
-    let minTimeLabel = UILabel()
-    let maxTimeLabel = UILabel()
-    
+    let playButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTrackImage()
         configureNameLabels()
         configurePlaybackSlider()
+        configurePlayButton()
         view.backgroundColor = .systemGray
     }
     
@@ -84,24 +85,40 @@ class TrackPlayerVC: UIViewController {
             playbackSlider.leadingAnchor.constraint(equalTo: trackImageView.leadingAnchor),
             playbackSlider.trailingAnchor.constraint(equalTo: trackImageView.trailingAnchor),
             playbackSlider.heightAnchor.constraint(equalToConstant: 20)
-            
-        
-        
         
         ])
     }
     
-    
-    private func configureTimeLabels(){
-        view.addSubview(minTimeLabel)
-        view.addSubview(maxTimeLabel)
+    private func configurePlayButton(){
+        view.addSubview(playButton)
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        playButton.backgroundColor = .red
+        playButton.addTarget(self, action: #selector(playButtonPressed), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            minTimeLabel.topAnchor.constraint(equalTo: albumNameLabel.bottomAnchor, constant: 10),
-            minTimeLabel.leadingAnchor.constraint(equalTo: playbackSlider.leadingAnchor),
-            minTimeLabel.widthAnchor.constraint(equalToConstant: <#T##CGFloat#>)
-        
+            playButton.topAnchor.constraint(equalTo: playbackSlider.bottomAnchor, constant: 20),
+            playButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playButton.heightAnchor.constraint(equalToConstant: 50),
+            playButton.widthAnchor.constraint(equalToConstant: 50),
         
         ])
     }
+    
+    
+    @objc func playButtonPressed(){
+        
+        let urlString = track.previewUrl
+        guard let url = URL.init(string: urlString!)
+            else {
+               
+                return
+        }
+        let playerItem = AVPlayerItem.init(url: url)
+        player = AVPlayer.init(playerItem: playerItem)
+        player?.play()
+        
+        
+    }
+    
 }
