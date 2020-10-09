@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func createLoginNC() -> UINavigationController {
         let loginVC = LoginVC()
-        loginVC.title = "Log in"
+        loginVC.title = "Log out"
         loginVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 0)
         return UINavigationController(rootViewController: loginVC)
     }

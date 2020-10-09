@@ -102,8 +102,8 @@ class TrackPlayerVC: UIViewController {
         view.addSubview(playButton)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         
-        playButton.backgroundColor = .red
         playButton.addTarget(self, action: #selector(playButtonPressed), for: .touchUpInside)
+        playButton.setBackgroundImage(UIImage(named: "play"), for: .normal)
         
         NSLayoutConstraint.activate([
             playButton.topAnchor.constraint(equalTo: playbackSlider.bottomAnchor, constant: 20),
@@ -124,7 +124,8 @@ class TrackPlayerVC: UIViewController {
         view.addSubview(favoriteButton)
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         
-        favoriteButton.backgroundColor = .blue
+        favoriteButton.setBackgroundImage(UIImage(named: "add"), for: .normal)
+
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         
         NSLayoutConstraint.activate([

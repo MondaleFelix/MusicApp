@@ -100,5 +100,17 @@ extension FavoritesListVC: UITableViewDataSource {
 
 
 extension FavoritesListVC: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let track = trackList[indexPath.row]
+        let trackPlayerVC = TrackPlayerVC()
+        trackPlayerVC.track = track
+        
+        // Passes image from selected cell to track player view controller
+        
+        let selectedCell = tableView.cellForRow(at: indexPath) as! ArtistCell
+        trackPlayerVC.trackImage = selectedCell.artistImage.image
+        
+        
+        navigationController?.pushViewController(trackPlayerVC, animated: true)
+    }
 }
